@@ -37,6 +37,11 @@ def create_app(test_config=None):
         )
         return response
 
+    @app.route("/")
+    def get_greeting():
+
+        return jsonify({"Greeting": "Hello!"})
+
     @app.route("/actors", methods=["GET"])
     def retrieve_actors():
         try:
