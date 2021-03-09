@@ -1,6 +1,7 @@
 from flask import Flask, request, abort, jsonify
-from models import setup_db, Actor
+from models import db, setup_db, Actor
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 
 # Pagination
@@ -26,6 +27,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
+    migrate = Migrate(app, db)
 
     @app.after_request
     def after_request(response):
