@@ -1,4 +1,4 @@
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, render_template, redirect, url_for
 from models import db, setup_db, Actor
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -40,9 +40,9 @@ def create_app(test_config=None):
         return response
 
     @app.route("/")
-    def get_greeting():
+    def index():
 
-        return jsonify({"Greeting": "Hello!"})
+        return render_template("index.html", data=Actor.query.all())
 
     @app.route("/actors", methods=["GET"])
     def retrieve_actors():
@@ -63,27 +63,38 @@ def create_app(test_config=None):
         except:
             abort(404)
 
-    # @app.route("/actors/<int:actor_id>", methods=["GET"])
-    # def get_specific_actor(actor_id):
+    @app.route("/actors/<int:actor_id>", methods=["GET"])
+    def get_specific_actor(actor_id):
 
-    #     try:
+        try:
 
-    #         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
-    #         current_actors = paginate_actors(request, selection)
+            actors = Actor.query.filter(Actor.id == actor_id).one_or_none()
+            current_actors = paginate_actors(request, selection)
 
-    #         if len(current_actors) == 0:
-    #             abort(404)
+            if len(current_actors) == 0:
+                abort(404)
 
-    #         return jsonify(
-    #             {
-    #                 "success": True,
-    #                 "actors": current_actors,
-    #                 "total_actors": len(current_actors),
-    #             }
-    #         )
+            return jsonify(
+                {
+                    "success": True,
+                    "actors": current_actors,
+                    "total_actors": len(current_actors),
+                    "current_actor": actor_id,
+                }
+            )
 
-    #     except:
-    #         abort(404)
+        except:
+            abort(404)
+
+    @app.route("/actors/create", methods=["POST"])
+    def create_actor():
+        attributes_name = request.form.get("attributes_name", "")
+        age = request.form.get("age", "")
+        gender = request.form.get("gender", "")
+        actor = Actor(attributes_name=attributes_name, age=age, gender=gender)
+        db.session.add(actor)
+        db.session.commit()
+        return redirect(url_for("index"))
 
     # 404
     @app.errorhandler(404)

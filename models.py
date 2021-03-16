@@ -24,10 +24,15 @@ def setup_db(app, database_path=database_path):
 class Actor(db.Model):
     __tablename__ = "actors"
 
-    id = Column(Integer, primary_key=True)
-    attributes_name = Column(String())
-    age = Column(String())
-    gender = Column(String())
+    id = db.Column(db.Integer, primary_key=True)
+    attributes_name = db.Column(db.String())
+    age = db.Column(db.String())
+    gender = db.Column(db.String())
+    actorsId = db.relationship(
+        "Movie", backref="Actor", lazy=True, cascade="all, delete-orphan"
+    )
+
+    # INSERT INTO actors (attributes_name, age, gender) VALUES ('Bond', '32', 'Male');
 
 
 def __init__(self, attributes_name, age, gender):
@@ -65,14 +70,16 @@ def format(self):
 class Movie(db.Model):
     __tablename__ = "movies"
 
-    id = Column(Integer, primary_key=True)
-    attributes_title = Column(String())
-    release_date = Column(String())
+    id = db.Column(db.Integer, primary_key=True)
+    attributes_title = db.Column(db.String())
+    release_date = db.Column(db.String())
+    actor_id = db.Column(db.Integer, db.ForeignKey("actors.id"))
 
 
-def __init__(self, attributes_title, release_date):
+def __init__(self, attributes_title, release_date, actor_id):
     self.attributes_title = attributes_title
     self.release_date = release_date
+    self.actor_id = actor_id
 
 
 def insert(self):
@@ -94,4 +101,5 @@ def format(self):
         "id": self.id,
         "attributes_title": self.attributes_title,
         "release_date": self.release_date,
+        "actor_id": self.actor_id,
     }
