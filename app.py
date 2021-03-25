@@ -3,6 +3,7 @@ from models import app, db, Actor
 from flask_cors import CORS
 import sys
 from config import SQLALCHEMY_DATABASE_URI
+from .auth import AuthError, requires_auth
 
 
 # App Config.
@@ -45,14 +46,15 @@ def retrieve_actors():
 
 # get specific actor by id
 @app.route("/actors/<int:actor_id>", methods=["GET"])
-def get_specific_actor(actor_id):
+@requires_auth("get:actors-detail")
+def get_specific_actor(jwt, actor_id):
 
     try:
         actor = db.session.query(Actor).filter(Actor.id == actor_id).all()
 
         return render_template("/show_actor.html", data=actor)
 
-    except:
+    except Exception as e:
         abort(404)
 
     finally:
@@ -61,7 +63,8 @@ def get_specific_actor(actor_id):
 
 # add new actor
 @app.route("/actors/create", methods=["POST"])
-def create_actor():
+@requires_auth("post:actors")
+def create_actor(payload):
     try:
         attributes_name = request.form.get("attributes_name", "")
         age = request.form.get("age", "")
@@ -72,7 +75,9 @@ def create_actor():
 
         return render_template("/actors.html", data=Actor.query.all())
 
-    except:
+    except Exception as e:
+        db.session.rollback()
+        print(sys.exc_info())
         abort(405)
 
     finally:
@@ -81,6 +86,7 @@ def create_actor():
 
 # delete specific actor by id
 @app.route("/actors/<int:actor_id>", methods=["DELETE"])
+@requires_auth("delete:actors")
 def delete_actor(actor_id):
     try:
 
@@ -91,7 +97,9 @@ def delete_actor(actor_id):
 
         return render_template("/actors.html", data=Actor.query.all())
 
-    except:
+    except Exception as e:
+        db.session.rollback()
+        print(sys.exc_info())
         abort(422)
 
     finally:
@@ -100,18 +108,19 @@ def delete_actor(actor_id):
 
 # edit specific actor by id
 @app.route("/actors/<int:actor_id>", methods=["PATCH"])
+@requires_auth("patch:actors")
 def edit_actor(actor_id):
     try:
 
         actor = Actor.query.get(actor_id)
-        actor.attributes_name = "My new Name"
+        actor.attributes_name = "My New Name"
 
         db.session.commit()
 
         return render_template("/actors.html", data=Actor.query.all())
 
-    except:
-        abort(422)
+    except Exception as e:
+        abort(400)
 
     finally:
         db.session.close()
@@ -152,6 +161,39 @@ def unprocessable(error):
         jsonify({"success": False, "error": 422, "message": "unprocessable"}),
         422,
     )
+
+
+# 400
+@app.errorhandler(400)
+def bad_request(error):
+    return (
+        jsonify({"success": False, "error": 400, "message": "Bad Request"}),
+        400,
+    )
+
+
+# 403
+@app.errorhandler(403)
+def forbidden(error):
+    return (
+        jsonify({"success": False, "error": 403, "message": "Forbidden"}),
+        403,
+    )
+
+
+# 500
+@app.errorhandler(500)
+def internal_server_error(error):
+    return (
+        jsonify({"success": False, "error": 500, "message": "Internal Server Error"}),
+        500,
+    )
+
+
+# error handler for AuthError
+@app.errorhandler(AuthError)
+def auth_error(e):
+    return jsonify(e.error), e.status_code
 
     return app
 
