@@ -3,7 +3,7 @@ from models import app, db, Actor
 from flask_cors import CORS
 import sys
 from config import SQLALCHEMY_DATABASE_URI
-from .auth import AuthError, requires_auth
+from auth import AuthError, requires_auth
 
 
 # App Config.
@@ -87,7 +87,7 @@ def create_actor(payload):
 # delete specific actor by id
 @app.route("/actors/<int:actor_id>", methods=["DELETE"])
 @requires_auth("delete:actors")
-def delete_actor(actor_id):
+def delete_actor(jwt, actor_id):
     try:
 
         actor = Actor.query.get(actor_id)
@@ -109,7 +109,7 @@ def delete_actor(actor_id):
 # edit specific actor by id
 @app.route("/actors/<int:actor_id>", methods=["PATCH"])
 @requires_auth("patch:actors")
-def edit_actor(actor_id):
+def edit_actor(jwt, actor_id):
     try:
 
         actor = Actor.query.get(actor_id)

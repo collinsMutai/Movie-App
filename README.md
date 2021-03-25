@@ -99,10 +99,10 @@ The API will return four error types when requests fail:
 
 - General:
 
-* Sample: curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{"attributes_name":"Samuel L. Jackson", "age":"45", "gender":"Male"}'
+* Sample: curl http://127.0.0.1:5000/actors/create -X POST -H "Content-Type: application/json" -d '{"attributes_name":"Samuel L. Jackson", "age":"45", "gender":"Male"}'
 
 ### GET/actors/<int:actor_id
 
 - General:
 
-* Sample: curl -X GET http://127.0.0.1:5000/questions/4
+* Sample: curl -X GET http://127.0.0.1:5000/actors/4
