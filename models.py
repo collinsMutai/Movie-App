@@ -1,11 +1,25 @@
-from flask import Flask
+import os
+import sys
+from sqlalchemy import Column, String, Integer, Boolean, create_engine
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+import json
 
 
-app = Flask(__name__)
+database_name = "capstonedb"
+database_path = "postgresql://{}:{}@{}/{}".format(
+    "postgres", "7749", "localhost:5432", database_name
+)
+
 db = SQLAlchemy()
-migrate = Migrate(app, db)
+
+
+def setup_db(app, database_path=database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.app = app
+    db.init_app(app)
+    db.create_all()
+
 
 
 class Actor(db.Model):
