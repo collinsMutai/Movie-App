@@ -250,7 +250,7 @@ def auth_error(e):
 
     return app
 
-
+# pip install -r requirements.txt
 # # pip freeze > requirements.txt
 # # FLASK_APP=app.py FLASK_DEBUG=true flask run
 # # pg_ctl -D "C:/Program Files/PostgreSQL/13/data" start
