@@ -1,0 +1,17 @@
+<html>
+  <head>Movies</head>
+  <body>
+    <form method="post" action="/movies">
+      <input type="text" name="attributes_title" placeholder="attributes_title" />
+      <input type="text" name="release_date" placeholder="release_date"/>
+      <input type="text" name="actor_id" placeholder="actor_id"/>
+      <input type="submit" value="Create Movie" />
+    </form>
+    <ul>
+      {% for d in data %}
+      <li>{{ d.attributes_title }}</li>
+      
+      {% endfor %}
+    </ul>
+  </body>
+</html>

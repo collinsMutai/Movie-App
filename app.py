@@ -1,5 +1,5 @@
 from flask import Flask, request, abort, jsonify, render_template, redirect, url_for
-from models import app, db, Actor
+from models import app, db, Actor, Movie
 from flask_cors import CORS
 import sys
 from config import SQLALCHEMY_DATABASE_URI
@@ -39,19 +39,36 @@ def after_request(response):
 
 @app.route("/")
 def index():
-
+    # return "Flask app"
     return  redirect(url_for("retrieve_actors"))
 
 
 #  get all actors
 @app.route("/actors", methods=["GET"])
+# @requires_auth("get:actors&movies")
+# def retrieve_actors(jwt):
 def retrieve_actors():
 
     try:
         actors = Actor.query.all()
 
         return render_template("actors.html", data=Actor.query.all())
-    # return redirect(url_for("index.html"))
+   
+
+    except:
+        abort(404)
+
+#  get all movies
+@app.route("/movies", methods=["GET"])
+# @requires_auth("get:actors&movies")
+# def retrieve_movies(jwt):
+def retrieve_movies():
+
+    try:
+        movies = Movie.query.all()
+
+        return render_template("movies.html", data=Movie.query.all())
+  
 
     except:
         abort(404)
@@ -76,7 +93,7 @@ def get_specific_actor(actor_id):
 
 # add actor
 @app.route("/actors", methods=["POST"])
-# @requires_auth("post:actors")
+# @requires_auth("add&delete:actor")
 def create_actor():
     try:
         attributes_name = request.form.get("attributes_name", "")
@@ -96,11 +113,33 @@ def create_actor():
     finally:
         db.session.close()
 
+# add movie
+@app.route("/movies", methods=["POST"])
+# @requires_auth("add&delete:movie")
+def create_movie():
+    try:
+        attributes_title = request.form.get("attributes_title", "")
+        release_date = request.form.get("release_date", "")
+        actor_id = request.form.get("actor_id", "")
+        movie = Movie(attributes_title=attributes_title, release_date=release_date, actor_id=actor_id)
+        db.session.add(movie)
+        db.session.commit()
+
+        return render_template("/movies.html", data=Movie.query.all())
+
+    except Exception as e:
+        db.session.rollback()
+        print(sys.exc_info())
+        abort(405)
+
+    finally:
+        db.session.close()
 
 
     # delete actor 
 @app.route("/delete/<int:id>")
-    
+# @requires_auth("add&delete:actor")  
+# def delete_actor(jwt,id):
 def delete_actor(id):
     actor = Actor.query.get_or_404(id)
     try:
@@ -121,7 +160,8 @@ def delete_actor(id):
 
 # update actor
 @app.route("/update/<int:id>", methods=['POST','GET'])
-  
+@requires_auth("patch:actors&movies")
+# def update(jwt,id):
 def update(id):
     actor_to_update = Actor.query.get_or_404(id)
     if request.method == 'POST':
@@ -139,7 +179,7 @@ def update(id):
         return render_template("update_actor.html", actor_to_update=actor_to_update)
 
 
-# movies
+
 
 
 # error Handling
@@ -214,3 +254,17 @@ def auth_error(e):
 # # pip freeze > requirements.txt
 # # FLASK_APP=app.py FLASK_DEBUG=true flask run
 # # pg_ctl -D "C:/Program Files/PostgreSQL/13/data" start
+
+# Casting Assistant 
+# get:actors&movies	Can view actors and movies
+
+# Casting Director 
+# get:actors&movies	Can view actors and movies
+# add&delete:actor	Add or delete an actor from the database
+# patch:actors&movies	Modify actors or movies
+
+# Executive Producer
+# get:actors&movies	Can view actors and movies
+# add&delete:actor	Add or delete an actor from the database
+# patch:actors&movies	Modify actors or movies
+# add&delete:movie	Add or delete a movie from the database
