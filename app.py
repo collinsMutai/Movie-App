@@ -3,7 +3,7 @@ from models import app, db, Actor, Movie
 from flask_cors import CORS
 import sys
 from config import SQLALCHEMY_DATABASE_URI
-from auth import AuthError, requires_auth
+# from auth import AuthError, requires_auth
 
 
 
@@ -160,7 +160,7 @@ def delete_actor(id):
 
 # update actor
 @app.route("/update/<int:id>", methods=['POST','GET'])
-@requires_auth("patch:actors&movies")
+# @requires_auth("patch:actors&movies")
 # def update(jwt,id):
 def update(id):
     actor_to_update = Actor.query.get_or_404(id)
@@ -244,9 +244,9 @@ def internal_server_error(error):
 
 
 # error handler for AuthError
-@app.errorhandler(AuthError)
-def auth_error(e):
-    return jsonify(e.error), e.status_code
+# @app.errorhandler(AuthError)
+# def auth_error(e):
+#     return jsonify(e.error), e.status_code
 
     return app
 
