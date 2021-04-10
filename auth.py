@@ -176,7 +176,7 @@ def requires_auth(permission=""):
 
 
 @app.route("/actors")
-@requires_auth("get:actors")
+@requires_auth("get:actors&movies")
 def images(payload):
     print(payload)
     return "Access Granted"

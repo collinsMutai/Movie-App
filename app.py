@@ -3,7 +3,7 @@ from models import app, db, Actor, Movie
 from flask_cors import CORS
 import sys
 from config import SQLALCHEMY_DATABASE_URI
-# from auth import AuthError, requires_auth
+from auth import AuthError, requires_auth
 
 
 
@@ -38,145 +38,32 @@ def after_request(response):
 
 
 @app.route("/")
+# @requires_auth("get:actors&movies")
 def index():
-    # return "Flask app"
-    return  redirect(url_for("retrieve_actors"))
+
+
+    return  "Flask App"
 
 
 #  get all actors
 @app.route("/actors", methods=["GET"])
-# @requires_auth("get:actors&movies")
-# def retrieve_actors(jwt):
 def retrieve_actors():
-
     try:
-        actors = Actor.query.all()
+        actors = Actor.query.order_by(Actor.id).all()
+        current_actors = paginate_actors(request, actors)
 
-        return render_template("actors.html", data=Actor.query.all())
-   
+        if len(current_actors) == 0:
+            abort(404)
 
-    except:
-        abort(404)
-
-#  get all movies
-@app.route("/movies", methods=["GET"])
-# @requires_auth("get:actors&movies")
-# def retrieve_movies(jwt):
-def retrieve_movies():
-
-    try:
-        movies = Movie.query.all()
-
-        return render_template("movies.html", data=Movie.query.all())
-  
-
+        return jsonify({
+            "success": True,
+            "actors": current_actors,
+            "total_actors": len(Actor.query.all())
+        })
     except:
         abort(404)
 
 
-# get specific actor by id
-@app.route("/actors/<int:actor_id>", methods=["GET"])
-   
-def get_specific_actor(actor_id):
-
-    try:
-        actor = db.session.query(Actor).filter(Actor.id == actor_id).all()
-
-        return render_template("/show_actor.html", data=actor)
-
-    except Exception as e:
-        abort(404)
-
-    finally:
-        db.session.close()
-
-
-# add actor
-@app.route("/actors", methods=["POST"])
-# @requires_auth("add&delete:actor")
-def create_actor():
-    try:
-        attributes_name = request.form.get("attributes_name", "")
-        age = request.form.get("age", "")
-        gender = request.form.get("gender", "")
-        actor = Actor(attributes_name=attributes_name, age=age, gender=gender)
-        db.session.add(actor)
-        db.session.commit()
-
-        return render_template("/actors.html", data=Actor.query.all())
-
-    except Exception as e:
-        db.session.rollback()
-        print(sys.exc_info())
-        abort(405)
-
-    finally:
-        db.session.close()
-
-# add movie
-@app.route("/movies", methods=["POST"])
-# @requires_auth("add&delete:movie")
-def create_movie():
-    try:
-        attributes_title = request.form.get("attributes_title", "")
-        release_date = request.form.get("release_date", "")
-        actor_id = request.form.get("actor_id", "")
-        movie = Movie(attributes_title=attributes_title, release_date=release_date, actor_id=actor_id)
-        db.session.add(movie)
-        db.session.commit()
-
-        return render_template("/movies.html", data=Movie.query.all())
-
-    except Exception as e:
-        db.session.rollback()
-        print(sys.exc_info())
-        abort(405)
-
-    finally:
-        db.session.close()
-
-
-    # delete actor 
-@app.route("/delete/<int:id>")
-# @requires_auth("add&delete:actor")  
-# def delete_actor(jwt,id):
-def delete_actor(id):
-    actor = Actor.query.get_or_404(id)
-    try:
-        db.session.delete(actor)
-        db.session.commit()
-
-        return render_template("actors.html", data=Actor.query.all())
-
-    except Exception as e:
-        db.session.rollback()
-        print(sys.exc_info())
-        abort(422)
-
-    finally:
-        db.session.close()
-
-
-
-# update actor
-@app.route("/update/<int:id>", methods=['POST','GET'])
-# @requires_auth("patch:actors&movies")
-# def update(jwt,id):
-def update(id):
-    actor_to_update = Actor.query.get_or_404(id)
-    if request.method == 'POST':
-        actor_to_update.attributes_name = request.form["attributes_name"]
-        try:
-            db.session.commit()
-            return render_template("actors.html", data=Actor.query.all())
-        except Exception as e:
-            db.session.rollback()
-            print(sys.exc_info())
-            abort(405)
-        finally:
-            db.session.close()
-    else:
-        return render_template("update_actor.html", actor_to_update=actor_to_update)
 
 
 
@@ -244,9 +131,9 @@ def internal_server_error(error):
 
 
 # error handler for AuthError
-# @app.errorhandler(AuthError)
-# def auth_error(e):
-#     return jsonify(e.error), e.status_code
+@app.errorhandler(AuthError)
+def auth_error(e):
+    return jsonify(e.error), e.status_code
 
     return app
 
