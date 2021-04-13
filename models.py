@@ -2,7 +2,7 @@ import os
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
-
+from config import SQLALCHEMY_DATABASE_URI
 
 database_name = "capstonedb"
 database_path = "postgres://{}:{}@{}/{}".format(
@@ -13,7 +13,7 @@ db = SQLAlchemy()
 
 
 def setup_db(app):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)

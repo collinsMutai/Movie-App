@@ -166,3 +166,7 @@ def auth_error(e):
 # INSERT INTO actors (attributes_name, age, gender) VALUES ('Bond', '32', 'Male');
 # heroku pg:psql HEROKU_POSTGRESQL_RED_URL
 # heroku pg:push capstonedb HEROKU_POSTGRESQL_RED_URL --app guarded-fjord-08535
+# python manage.py db init
+# python manage.py db migrate
+# python manage.py db upgrade
+# heroku run python manage.py db upgrade guarded-fjord-08535
