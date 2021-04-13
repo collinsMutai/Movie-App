@@ -162,3 +162,5 @@ def create_app(test_config=None):
 # add&delete:movie	Add or delete a movie from the database
 
 # INSERT INTO actors (attributes_name, age, gender) VALUES ('Bond', '32', 'Male');
+# heroku pg:psql HEROKU_POSTGRESQL_RED_URL
+# heroku pg:push capstonedb HEROKU_POSTGRESQL_RED_URL --app guarded-fjord-08535
