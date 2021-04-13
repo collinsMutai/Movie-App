@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 
-from models import setup_db, Actor, Movie
+from models import db_drop_and_create_all, setup_db, Actor, Movie
 
 
 from auth import AuthError, requires_auth
@@ -24,49 +24,51 @@ def paginate_actors(request, selection):
     return current_actors
 
 # App Config.
-def create_app(test_config=None):
+# def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__)
-    setup_db(app)
-    CORS(app)
+app = Flask(__name__)
+setup_db(app)
+CORS(app)
 
 
-    @app.after_request
-    def after_request(response):
-        response.headers.add(
-            "Access-Control-Allow-Headers", "Content-Type,Authorization,true"
-        )
-        response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
-        return response
+db_drop_and_create_all()
+
+@app.after_request
+def after_request(response):
+    response.headers.add(
+        "Access-Control-Allow-Headers", "Content-Type,Authorization,true"
+    )
+    response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
+    return response
 
 
-    @app.route("/")
+@app.route("/")
     # @requires_auth("get:actors&movies")
-    def index():
+def index():
 
 
-        return  "Flask App"
+    return  "Flask App"
 
 
     #  get all actors
-    @app.route("/actors", methods=["GET"])
-    def retrieve_actors():
+@app.route("/actors", methods=["GET"])
+def retrieve_actors():
         
-        actors = Actor.query.order_by(Actor.id).all()
-        current_actors = paginate_actors(request, actors)
+    actors = Actor.query.order_by(Actor.id).all()
+    current_actors = paginate_actors(request, actors)
 
         
-        if len(current_actors) == 0:
-            abort(404)
+    if len(current_actors) == 0:
+        abort(404)
                 
             
-        total_actors = len(Actor.query.all())
+    total_actors = len(Actor.query.all())
 
-        return jsonify({
-            "success": True,
-            "actors": current_actors,
-            "total_actors": total_actors
-            })
+    return jsonify({
+        "success": True,
+        "actors": current_actors,
+        "total_actors": total_actors
+        })
 
 
 
@@ -76,59 +78,59 @@ def create_app(test_config=None):
 
     # error Handling
     # 404
-    @app.errorhandler(404)
-    def not_found(error):
-        return (
-            jsonify({"success": False, "error": 404, "message": "Resource Not Found"}),
-            404,
-        )
+@app.errorhandler(404)
+def not_found(error):
+    return (
+        jsonify({"success": False, "error": 404, "message": "Resource Not Found"}),
+        404,
+    )
 
 
     # 405
-    @app.errorhandler(405)
-    def method_not_allowed(error):
-        return (
-            jsonify(
-                {
+@app.errorhandler(405)
+def method_not_allowed(error):
+    return (
+        jsonify(
+            {
                     "success": False,
                     "eror": 405,
                     "message": "The method is not allowed for the requested URL",
-                }
-            ),
-            405,
-        )
+            }
+        ),
+        405,
+    )
 
 
     # 422
-    @app.errorhandler(422)
-    def unprocessable(error):
-        return (
+@app.errorhandler(422)
+def unprocessable(error):
+    return (
             jsonify({"success": False, "error": 422, "message": "unprocessable"}),
             422,
-        )
+    )
 
 
     # 400
-    @app.errorhandler(400)
-    def bad_request(error):
-        return (
+@app.errorhandler(400)
+def bad_request(error):
+    return (
             jsonify({"success": False, "error": 400, "message": "Bad Request"}),
             400,
         )
 
 
     # 403
-    @app.errorhandler(403)
-    def forbidden(error):
-        return (
+@app.errorhandler(403)
+def forbidden(error):
+    return (
             jsonify({"success": False, "error": 403, "message": "Forbidden"}),
             403,
         )
 
 
     # 500
-    @app.errorhandler(500)
-    def internal_server_error(error):
+@app.errorhandler(500)
+def internal_server_error(error):
         return (
             jsonify({"success": False, "error": 500, "message": "Internal Server Error"}),
             500,
@@ -136,9 +138,9 @@ def create_app(test_config=None):
 
 
     # error handler for AuthError
-    @app.errorhandler(AuthError)
-    def auth_error(e):
-        return jsonify(e.error), e.status_code
+@app.errorhandler(AuthError)
+def auth_error(e):
+    return jsonify(e.error), e.status_code
 
     return app
 
