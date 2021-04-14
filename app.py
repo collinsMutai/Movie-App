@@ -70,6 +70,8 @@ def create_app(test_config=None):
             })
 
 
+    # curl -X DELETE http://127.0.0.1:5000/actors/1
+
 
     @app.route("/actors/<int:actors_id>", methods=["DELETE"])
     def delete_actor(actors_id):
@@ -100,6 +102,29 @@ def create_app(test_config=None):
             abort(422)
 
 
+
+    # curl http://127.0.0.1:5000/actors/1 -X PATCH -H "Content-Type: application/json" -d '{"attributes_name":"Samuel L Jackson"}'
+
+
+    @app.route("/actors/<int:actors_id>", methods=["PATCH"])
+    def update_actor(actors_id):
+
+        body = request.get_json()
+
+        try:
+            actor = Actor.query.filter(Actor.id == actors_id).one_or_none()
+            if actor is None:
+                abort(404)
+
+            if "attributes_name" in body:
+                actor.attributes_name= body.get("attributes_name")
+
+                actor.update()
+
+            return jsonify({"success": True, "id": actor.id})
+        except:
+
+            abort(400)
 
 
         # error Handling

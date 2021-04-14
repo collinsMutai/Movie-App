@@ -81,26 +81,44 @@ class TriviaTestCase(unittest.TestCase):
 
     # # DELETE with question_id.
 
-    def test_delete_actors(self):
-        res = self.client().delete("/actors/1")
-        data = json.loads(res.data)
+    # def test_delete_actors(self):
+    #     res = self.client().delete("/actors/1")
+    #     data = json.loads(res.data)
 
+    #     actor = Actor.query.filter(Actor.id == 1).one_or_none()
+
+    #     self.assertEqual(res.status_code, 200)
+    #     self.assertEqual(data["success"], True)
+    #     self.assertEqual(data["deleted"], 1)
+    #     self.assertTrue(data["actors"])
+    #     self.assertTrue(data["total_actors"])
+    #     self.assertEqual(actor, None)
+
+    # def test_delete_actors_not_found(self):
+    #     res = self.client().delete("/actors/100")
+    #     data = json.loads(res.data)
+
+    #     self.assertEqual(res.status_code, 422)
+    #     self.assertEqual(data["success"], False)
+    #     self.assertEqual(data["message"], "Unprocessable")
+
+    def test_update_attribute_name(self):
+        res = self.client().patch('/actors/1', json={'attributes_name': "Kevin Hart"})
+        data = json.loads(res.data)
         actor = Actor.query.filter(Actor.id == 1).one_or_none()
 
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(data["success"], True)
-        self.assertEqual(data["deleted"], 1)
-        self.assertTrue(data["actors"])
-        self.assertTrue(data["total_actors"])
-        self.assertEqual(actor, None)
+        self.assertEqual(data['success'], True)
+        self.assertEqual(book.format()['attributes_name'], "Kevin Hart")
+        
 
-    def test_delete_actors_not_found(self):
-        res = self.client().delete("/actors/100")
+    def test_400_for_failed_update(self):
+        res = self.client().patch('/actors/1')
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 422)
-        self.assertEqual(data["success"], False)
-        self.assertEqual(data["message"], "Unprocessable")
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Bad Request')
 
     # # POST new question.
 
