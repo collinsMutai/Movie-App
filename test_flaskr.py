@@ -3,7 +3,7 @@ import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
 
-from app import app
+from app import create_app
 from models import setup_db, Actor, Movie
 
 
@@ -44,22 +44,22 @@ class TriviaTestCase(unittest.TestCase):
     
     """
     # GET actors.
-    def test_get_actors(self):
-        res = self.client().get("/actors")
-        data = json.loads(res.data)
+    # def test_get_actors(self):
+    #     res = self.client().get("/actors")
+    #     data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data["success"],
-        self.assertTrue(data["actors"]),True)
-        self.assertTrue(data["total_actors"])
+    #     self.assertEqual(res.status_code, 200)
+    #     self.assertEqual(data["success"],True)
+    #     self.assertTrue(data["actors"])
+    #     self.assertTrue(data["total_actors"])
 
-    def test_get_categories_not_found(self):
-        res = self.client().get("/actors/100")
-        data = json.loads(res.data)
+    # def test_get_categories_not_found(self):
+    #     res = self.client().get("/actors/100")
+    #     data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 404)
-        self.assertEqual(data["success"], False)
-        self.assertEqual(data["message"], "Resource Not Found")
+    #     self.assertEqual(res.status_code, 404)
+    #     self.assertEqual(data["success"], False)
+    #     self.assertEqual(data["message"], "Resource Not Found")
 
     #  GET questions.
     # def test_paginated_questions(self):
@@ -81,26 +81,26 @@ class TriviaTestCase(unittest.TestCase):
 
     # # DELETE with question_id.
 
-    # def test_delete_questions(self):
-    #     res = self.client().delete("/questions/2")
-    #     data = json.loads(res.data)
+    def test_delete_actors(self):
+        res = self.client().delete("/actors/1")
+        data = json.loads(res.data)
 
-    #     question = Question.query.filter(Question.id == 1).one_or_none()
+        actor = Actor.query.filter(Actor.id == 1).one_or_none()
 
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data["success"], True)
-    #     self.assertEqual(data["deleted"], 2)
-    #     self.assertTrue(data["questions"])
-    #     self.assertTrue(data["total_questions"])
-    #     self.assertEqual(question, None)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["success"], True)
+        self.assertEqual(data["deleted"], 1)
+        self.assertTrue(data["actors"])
+        self.assertTrue(data["total_actors"])
+        self.assertEqual(actor, None)
 
-    # def test_delete_questions_not_found(self):
-    #     res = self.client().delete("/questions/100")
-    #     data = json.loads(res.data)
+    def test_delete_actors_not_found(self):
+        res = self.client().delete("/actors/100")
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 422)
-    #     self.assertEqual(data["success"], False)
-    #     self.assertEqual(data["message"], "Unprocessable")
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data["success"], False)
+        self.assertEqual(data["message"], "Unprocessable")
 
     # # POST new question.
 
