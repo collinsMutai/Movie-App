@@ -42,7 +42,6 @@ def create_app(test_config=None):
 
 
     @app.route("/")
-        # @requires_auth("get:actors&movies")
     def index():
 
 
@@ -52,7 +51,8 @@ def create_app(test_config=None):
     #  get all actors
 
     @app.route("/actors", methods=["GET"])
-    def retrieve_actors():
+    @requires_auth("get:actors&movies")
+    def retrieve_actors(jwt):
             
         actors = Actor.query.order_by(Actor.id).all()
         current_actors = paginate_actors(request, actors)
@@ -75,7 +75,8 @@ def create_app(test_config=None):
     #  Delete actor
 
     @app.route("/actors/<int:id>", methods=["DELETE"])
-    def delete_actor(id):
+    @requires_auth("delete:actor")
+    def delete_actor(jwt, id):
        
         try:
 
@@ -108,7 +109,8 @@ def create_app(test_config=None):
 
     # Update actor
     @app.route("/actors/<int:actors_id>", methods=["PATCH"])
-    def update_actor(actors_id):
+    @requires_auth("patch:actors&movies")
+    def update_actor(payload, actors_id):
 
         body = request.get_json()
 
@@ -134,7 +136,8 @@ def create_app(test_config=None):
 
     # Add new actor
     @app.route('/actors', methods=['POST'])
-    def create_actor():
+    @requires_auth("add:actor")
+    def create_actor(payload):
         body = request.get_json()
 
         attributes_name = body.get('attributes_name', None)
