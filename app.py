@@ -49,7 +49,8 @@ def create_app(test_config=None):
         return  "Flask App"
 
 
-        #  get all actors
+    #  get all actors
+
     @app.route("/actors", methods=["GET"])
     def retrieve_actors():
             
@@ -70,14 +71,15 @@ def create_app(test_config=None):
             })
 
 
-    # curl -X DELETE http://127.0.0.1:5000/actors/1
 
+    #  Delete actor
 
-    @app.route("/actors/<int:actors_id>", methods=["DELETE"])
-    def delete_actor(actors_id):
+    @app.route("/actors/<int:id>", methods=["DELETE"])
+    def delete_actor(id):
+       
         try:
 
-            actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+            actor = Actor.query.get(id)
 
             if actor is None:
                 abort(404)
@@ -92,7 +94,7 @@ def create_app(test_config=None):
             return jsonify(
                 {
                     "success": True,
-                    "deleted": actor_id,
+                    "deleted": actor.id,
                     "actors": current_actors,
                     "total_actors": total_actors
                 }
@@ -103,9 +105,8 @@ def create_app(test_config=None):
 
 
 
-    # curl http://127.0.0.1:5000/actors/1 -X PATCH -H "Content-Type: application/json" -d '{"attributes_name":"Samuel L Jackson"}'
 
-
+    # Update actor
     @app.route("/actors/<int:actors_id>", methods=["PATCH"])
     def update_actor(actors_id):
 
@@ -121,10 +122,44 @@ def create_app(test_config=None):
 
                 actor.update()
 
-            return jsonify({"success": True, "id": actor.id})
+            return jsonify({
+                "success": True, 
+                "updated": actor.id,
+                })
         except:
 
             abort(400)
+
+
+
+    # Add new actor
+    @app.route('/actors', methods=['POST'])
+    def create_actor():
+        body = request.get_json()
+
+        attributes_name = body.get('attributes_name', None)
+        age = body.get('age', None)
+        gender = body.get('gender', None)
+        
+
+        try:
+            actor = Actor(attributes_name=attributes_name, age=age, gender=gender)
+            actor.insert()
+
+            selection = Actor.query.order_by(Actor.id).all()
+            current_actors = paginate_actors(request, selection)
+
+            total_actors = len(Actor.query.all())
+
+            return jsonify({
+                'success': True,
+                'created': actor.id,
+                'actors': current_actors,
+                'total_actors': total_actors
+            })
+
+        except:
+            abort(422)
 
 
         # error Handling
@@ -145,7 +180,7 @@ def create_app(test_config=None):
                 {
                         "success": False,
                         "eror": 405,
-                        "message": "The method is not allowed for the requested URL",
+                        "message": "Method Not Allowed",
                 }
             ),
             405,

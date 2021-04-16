@@ -21,7 +21,7 @@ class TriviaTestCase(unittest.TestCase):
 
         setup_db(self.app, self.database_path)
 
-        self.new_question = {
+        self.new_actor = {
             "attributes_name" : "James",
             "age" : "45",
             "gender" : "Male"
@@ -79,62 +79,62 @@ class TriviaTestCase(unittest.TestCase):
     #     self.assertEqual(data["success"], False)
     #     self.assertEqual(data["message"], "Resource Not Found")
 
-    # # DELETE with question_id.
+    # # DELETE with actor_id.
 
-    # def test_delete_actors(self):
-    #     res = self.client().delete("/actors/1")
-    #     data = json.loads(res.data)
-
-    #     actor = Actor.query.filter(Actor.id == 1).one_or_none()
-
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data["success"], True)
-    #     self.assertEqual(data["deleted"], 1)
-    #     self.assertTrue(data["actors"])
-    #     self.assertTrue(data["total_actors"])
-    #     self.assertEqual(actor, None)
-
-    # def test_delete_actors_not_found(self):
-    #     res = self.client().delete("/actors/100")
-    #     data = json.loads(res.data)
-
-    #     self.assertEqual(res.status_code, 422)
-    #     self.assertEqual(data["success"], False)
-    #     self.assertEqual(data["message"], "Unprocessable")
-
-    def test_update_attribute_name(self):
-        res = self.client().patch('/actors/1', json={'attributes_name': "Kevin Hart"})
+    def test_delete_actors(self):
+        res = self.client().delete("/actors/1")
         data = json.loads(res.data)
+
         actor = Actor.query.filter(Actor.id == 1).one_or_none()
 
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], True)
-        self.assertEqual(book.format()['attributes_name'], "Kevin Hart")
-        
+        self.assertEqual(data["success"], True)
+        self.assertEqual(data["deleted"], 1)
+        self.assertTrue(data["actors"])
+        self.assertTrue(data["total_actors"])
+        self.assertEqual(actor, None)
 
-    def test_400_for_failed_update(self):
-        res = self.client().patch('/actors/1')
+    def test_delete_actors_not_found(self):
+        res = self.client().delete("/actors/100")
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 400)
-        self.assertEqual(data['success'], False)
-        self.assertEqual(data['message'], 'Bad Request')
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data["success"], False)
+        self.assertEqual(data["message"], "Unprocessable")
 
-    # # POST new question.
+    # def test_update_attribute_name(self):
+    #     res = self.client().patch('/actors/1', json={'attributes_name': "Kevin Hart"})
+    #     data = json.loads(res.data)
+    #     actor = Actor.query.filter(Actor.id == 1).one_or_none()
 
-    # def test_post_new_question(self):
-    #     res = self.client().post("/questions", json=self.new_question)
+    #     self.assertEqual(res.status_code, 200)
+    #     self.assertEqual(data['success'], True)
+    #     self.assertEqual(book.format()['attributes_name'], "Kevin Hart")
+        
+
+    # def test_400_for_failed_update(self):
+    #     res = self.client().patch('/actors/1')
+    #     data = json.loads(res.data)
+
+    #     self.assertEqual(res.status_code, 400)
+    #     self.assertEqual(data['success'], False)
+    #     self.assertEqual(data['message'], 'Bad Request')
+
+    # # POST new actor.
+
+    # def test_post_actor(self):
+    #     res = self.client().post("/actors", json=self.new_actor)
     #     data = json.loads(res.data)
 
     #     self.assertEqual(res.status_code, 200)
     #     self.assertEqual(data["success"], True)
     #     self.assertTrue(data["created"])
 
-    #     self.assertTrue(data["questions"])
-    #     self.assertTrue(data["total_questions"])
+    #     self.assertTrue(data["actors"])
+    #     self.assertTrue(data["total_actors"])
 
-    # def test_post_new_question_405(self):
-    #     res = self.client().post("/questions/100", json=self.new_question)
+    # def test_post_new_actor_405(self):
+    #     res = self.client().post("/actors/100", json=self.new_actor)
     #     data = json.loads(res.data)
 
     #     self.assertEqual(res.status_code, 405)

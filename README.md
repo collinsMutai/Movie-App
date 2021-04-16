@@ -81,7 +81,32 @@ The API will return four error types when requests fail:
 
 - General:
 
+  - Returns actors object, success value, and total number of actors
+
 - Sample: curl -X GET http://127.0.0.1:5000/actors
+  "actors": [
+  {
+  "age": "32",
+  "attributes_name": "Samuel L Jackson",
+  "gender": "Male",
+  "id": 1
+  },
+  {
+  "age": "",
+  "attributes_name": "Dwayne Johnson",
+  "gender": "Male",
+  "id": 2
+  },
+  {
+  "age": "",
+  "attributes_name": "Jet Lee",
+  "gender": "Male",
+  "id": 3
+  }
+  ],
+  "success": true,
+  "total_actors": 3
+  }
 
 ### GET/movies
 
@@ -89,20 +114,71 @@ The API will return four error types when requests fail:
 
 - Sample: curl -X GET http://127.0.0.1:5000/movies
 
-### DELETE/actors/<int:actor_id>
+### DELETE/actors/<int:id>
 
 - General:
 
-- Sample: curl -X DELETE http://127.0.0.1:5000/actors/10
+  - Deletes an actor based on id and returns actors object, id of deleted actor, success message and value
+
+- Sample: curl -X DELETE http://127.0.0.1:5000/actors/4
+  "actors": [
+  {
+  "age": "",
+  "attributes_name": "Dwayne Johnson",
+  "gender": "Male",
+  "id": 2
+  },
+  {
+  "age": "",
+  "attributes_name": "Jet Lee",
+  "gender": "Male",
+  "id": 3
+  }
+  ],
+  "deleted": 4,
+  "success": true,
+  "total_actors": 2
+  }
 
 ### POST/actors
 
 - General:
 
-* Sample: curl http://127.0.0.1:5000/actors/create -X POST -H "Content-Type: application/json" -d '{"attributes_name":"Samuel L. Jackson", "age":"45", "gender":"Male"}'
+  - Creates a new actor, returns actors object, the id of created actor, success message and total number of actors
 
-### GET/actors/<int:actor_id
+- Sample: curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{"attributes_name":"Morgan Freeman", "age":"45", "gender":"Male"}'
+  "actors": [
+  {
+  "age": "",
+  "attributes_name": "Dwayne Johnson",
+  "gender": "Male",
+  "id": 2
+  },
+  {
+  "age": "",
+  "attributes_name": "Jet Lee",
+  "gender": "Male",
+  "id": 3
+  },
+  {
+  "age": "45",
+  "attributes_name": "Morgan Freeman",
+  "gender": "Male",
+  "id": 5
+  }
+  ],
+  "created": 5,
+  "success": true,
+  "total_actors": 3
+  }
+
+### PATCH/actors
 
 - General:
 
-* Sample: curl -X GET http://127.0.0.1:5000/actors/4
+  - Updates the attributes_name of an actor, returns the id of updated actor, and a success message.
+
+- Sample: curl http://127.0.0.1:5000/actors/2 -X PATCH -H "Content-Type: application/json" -d '{"attributes_name":"Collins"}'
+  "success": true,
+  "updated": 2
+  }
