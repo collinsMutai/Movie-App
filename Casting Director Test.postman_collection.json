@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "85dd8665-0cdd-4091-83ea-e8048bab1675",
+		"name": "Casting Director Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Actors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1mOXkzamZXOWM2MThxOFJNTEZkYyJ9.eyJpc3MiOiJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI1MjU5NjA3ODIxMjU0MzczNjQiLCJhdWQiOlsiY2Fwc3RvbmUiLCJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjE4NjIwOTkzLCJleHAiOjE2MTg2MjgxOTMsImF6cCI6IkcxRFVZZVpDbG4xZ2FSUzUwZjg5OW5lcnlaR3pVeVM1Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImRlbGV0ZTphY3RvciIsImdldDphY3RvcnMmbW92aWVzIiwicGF0Y2g6YWN0b3JzJm1vdmllcyJdfQ.PsBE_r36vbpL1rBmHJ_kUHRvFtXTzYuktHbh44etNSMsbW4wRHvGtfqurIIqvTdhjI6cfK2lWuORpw-ovQnr8FgbbvLJAUfai5D6PiH1lbX0Y9Xp-sA8mWVexn9jd_oTapI0TZ2fETDeB8lwa2NB9Enwg7nPk_0yabsbJRgGwY8mu7RFnjNcnP3yu-L9ZYuajTzjWgCvO5ca3vHMulsxUwwWAURMhmdh3KnGEdzwC8yUWb0Qz1-J_erfJ0wZHh85TbH3BC5NI32zVzMxNt-PwpybfG5GJ_c7KIK5BnoZNmXFzVoGOJVeyyS_mzUYCI9-Fi2NcaHvALlAuNmQJCSoZg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/actors",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Actors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1mOXkzamZXOWM2MThxOFJNTEZkYyJ9.eyJpc3MiOiJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI1MjU5NjA3ODIxMjU0MzczNjQiLCJhdWQiOlsiY2Fwc3RvbmUiLCJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjE4NjIwOTkzLCJleHAiOjE2MTg2MjgxOTMsImF6cCI6IkcxRFVZZVpDbG4xZ2FSUzUwZjg5OW5lcnlaR3pVeVM1Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImRlbGV0ZTphY3RvciIsImdldDphY3RvcnMmbW92aWVzIiwicGF0Y2g6YWN0b3JzJm1vdmllcyJdfQ.PsBE_r36vbpL1rBmHJ_kUHRvFtXTzYuktHbh44etNSMsbW4wRHvGtfqurIIqvTdhjI6cfK2lWuORpw-ovQnr8FgbbvLJAUfai5D6PiH1lbX0Y9Xp-sA8mWVexn9jd_oTapI0TZ2fETDeB8lwa2NB9Enwg7nPk_0yabsbJRgGwY8mu7RFnjNcnP3yu-L9ZYuajTzjWgCvO5ca3vHMulsxUwwWAURMhmdh3KnGEdzwC8yUWb0Qz1-J_erfJ0wZHh85TbH3BC5NI32zVzMxNt-PwpybfG5GJ_c7KIK5BnoZNmXFzVoGOJVeyyS_mzUYCI9-Fi2NcaHvALlAuNmQJCSoZg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"attributes_name\": \"Collins\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/actors/8",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"actors",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Actor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1mOXkzamZXOWM2MThxOFJNTEZkYyJ9.eyJpc3MiOiJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI1MjU5NjA3ODIxMjU0MzczNjQiLCJhdWQiOlsiY2Fwc3RvbmUiLCJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjE4NjIwOTkzLCJleHAiOjE2MTg2MjgxOTMsImF6cCI6IkcxRFVZZVpDbG4xZ2FSUzUwZjg5OW5lcnlaR3pVeVM1Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImRlbGV0ZTphY3RvciIsImdldDphY3RvcnMmbW92aWVzIiwicGF0Y2g6YWN0b3JzJm1vdmllcyJdfQ.PsBE_r36vbpL1rBmHJ_kUHRvFtXTzYuktHbh44etNSMsbW4wRHvGtfqurIIqvTdhjI6cfK2lWuORpw-ovQnr8FgbbvLJAUfai5D6PiH1lbX0Y9Xp-sA8mWVexn9jd_oTapI0TZ2fETDeB8lwa2NB9Enwg7nPk_0yabsbJRgGwY8mu7RFnjNcnP3yu-L9ZYuajTzjWgCvO5ca3vHMulsxUwwWAURMhmdh3KnGEdzwC8yUWb0Qz1-J_erfJ0wZHh85TbH3BC5NI32zVzMxNt-PwpybfG5GJ_c7KIK5BnoZNmXFzVoGOJVeyyS_mzUYCI9-Fi2NcaHvALlAuNmQJCSoZg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/actors/8",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"actors",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Actor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1mOXkzamZXOWM2MThxOFJNTEZkYyJ9.eyJpc3MiOiJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI1MjU5NjA3ODIxMjU0MzczNjQiLCJhdWQiOlsiY2Fwc3RvbmUiLCJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjE4NjIwOTkzLCJleHAiOjE2MTg2MjgxOTMsImF6cCI6IkcxRFVZZVpDbG4xZ2FSUzUwZjg5OW5lcnlaR3pVeVM1Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImRlbGV0ZTphY3RvciIsImdldDphY3RvcnMmbW92aWVzIiwicGF0Y2g6YWN0b3JzJm1vdmllcyJdfQ.PsBE_r36vbpL1rBmHJ_kUHRvFtXTzYuktHbh44etNSMsbW4wRHvGtfqurIIqvTdhjI6cfK2lWuORpw-ovQnr8FgbbvLJAUfai5D6PiH1lbX0Y9Xp-sA8mWVexn9jd_oTapI0TZ2fETDeB8lwa2NB9Enwg7nPk_0yabsbJRgGwY8mu7RFnjNcnP3yu-L9ZYuajTzjWgCvO5ca3vHMulsxUwwWAURMhmdh3KnGEdzwC8yUWb0Qz1-J_erfJ0wZHh85TbH3BC5NI32zVzMxNt-PwpybfG5GJ_c7KIK5BnoZNmXFzVoGOJVeyyS_mzUYCI9-Fi2NcaHvALlAuNmQJCSoZg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"age\": \"40\",\r\n    \"attributes_name\": \"Adams Sundler\",\r\n    \"gender\": \"Male\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/actors",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"actors"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

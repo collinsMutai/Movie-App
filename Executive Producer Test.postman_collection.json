@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "7b752e39-cc00-4c83-988a-3dda2efd521d",
+		"name": "Executive Producer Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Actors",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1mOXkzamZXOWM2MThxOFJNTEZkYyJ9.eyJpc3MiOiJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI1MjU5NjA3ODIxMjU0MzczNjQiLCJhdWQiOlsiY2Fwc3RvbmUiLCJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjE4NjE5NjM2LCJleHAiOjE2MTg2MjY4MzYsImF6cCI6IkcxRFVZZVpDbG4xZ2FSUzUwZjg5OW5lcnlaR3pVeVM1Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImFkZDptb3ZpZSIsImRlbGV0ZTphY3RvciIsImRlbGV0ZTptb3ZpZSIsImdldDphY3RvcnMmbW92aWVzIiwicGF0Y2g6YWN0b3JzJm1vdmllcyJdfQ.7cfOzxLwdvedqBOkQEh3SQLs8QknQs42R2Lzte7Yh8e1VsDSYQZ2icUnO48XrT9NK1AFO3rkXtvGs4iCx82Ll8pjsWvZaQuUC0iVwwjndwIFEM1Mv6bjplXh2mCNny4TlFawbRyB66U8zyvFrhm_GWuf2VRw3q-rG7jvM7Hb2Ujre5s1IXWE5mBDOUIDCvURNfqb01AY8prxl8ZKE0QHB7JdBbpMQ8s97Qs1lNMVbDRheKYInehPtAENOYwR9zR0uEG2pqFT9m17bVUd7vdLGxNrrMwYokquZ26SgWG8KqC1iMXflUCIX1qKeEd8kp9ftw116naL-CfGBtaL2dGtWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/actors",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Actor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1mOXkzamZXOWM2MThxOFJNTEZkYyJ9.eyJpc3MiOiJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI1MjU5NjA3ODIxMjU0MzczNjQiLCJhdWQiOlsiY2Fwc3RvbmUiLCJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjE4NjE5NjM2LCJleHAiOjE2MTg2MjY4MzYsImF6cCI6IkcxRFVZZVpDbG4xZ2FSUzUwZjg5OW5lcnlaR3pVeVM1Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImFkZDptb3ZpZSIsImRlbGV0ZTphY3RvciIsImRlbGV0ZTptb3ZpZSIsImdldDphY3RvcnMmbW92aWVzIiwicGF0Y2g6YWN0b3JzJm1vdmllcyJdfQ.7cfOzxLwdvedqBOkQEh3SQLs8QknQs42R2Lzte7Yh8e1VsDSYQZ2icUnO48XrT9NK1AFO3rkXtvGs4iCx82Ll8pjsWvZaQuUC0iVwwjndwIFEM1Mv6bjplXh2mCNny4TlFawbRyB66U8zyvFrhm_GWuf2VRw3q-rG7jvM7Hb2Ujre5s1IXWE5mBDOUIDCvURNfqb01AY8prxl8ZKE0QHB7JdBbpMQ8s97Qs1lNMVbDRheKYInehPtAENOYwR9zR0uEG2pqFT9m17bVUd7vdLGxNrrMwYokquZ26SgWG8KqC1iMXflUCIX1qKeEd8kp9ftw116naL-CfGBtaL2dGtWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"attributes_name\": \"Jackie Chan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/actors/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"actors",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Actor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1mOXkzamZXOWM2MThxOFJNTEZkYyJ9.eyJpc3MiOiJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI1MjU5NjA3ODIxMjU0MzczNjQiLCJhdWQiOlsiY2Fwc3RvbmUiLCJodHRwczovL2NvbGxpbnNmcm9udGVuZC51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjE4NjE5NjM2LCJleHAiOjE2MTg2MjY4MzYsImF6cCI6IkcxRFVZZVpDbG4xZ2FSUzUwZjg5OW5lcnlaR3pVeVM1Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvciIsImFkZDptb3ZpZSIsImRlbGV0ZTphY3RvciIsImRlbGV0ZTptb3ZpZSIsImdldDphY3RvcnMmbW92aWVzIiwicGF0Y2g6YWN0b3JzJm1vdmllcyJdfQ.7cfOzxLwdvedqBOkQEh3SQLs8QknQs42R2Lzte7Yh8e1VsDSYQZ2icUnO48XrT9NK1AFO3rkXtvGs4iCx82Ll8pjsWvZaQuUC0iVwwjndwIFEM1Mv6bjplXh2mCNny4TlFawbRyB66U8zyvFrhm_GWuf2VRw3q-rG7jvM7Hb2Ujre5s1IXWE5mBDOUIDCvURNfqb01AY8prxl8ZKE0QHB7JdBbpMQ8s97Qs1lNMVbDRheKYInehPtAENOYwR9zR0uEG2pqFT9m17bVUd7vdLGxNrrMwYokquZ26SgWG8KqC1iMXflUCIX1qKeEd8kp9ftw116naL-CfGBtaL2dGtWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/actors/7",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"actors",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Actor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		}
+	]
+}

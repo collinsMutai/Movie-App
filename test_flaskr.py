@@ -44,40 +44,40 @@ class TriviaTestCase(unittest.TestCase):
     
     """
     # GET actors.
-    # def test_get_actors(self):
-    #     res = self.client().get("/actors")
-    #     data = json.loads(res.data)
+    def test_get_actors(self):
+        res = self.client().get("/actors")
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data["success"],True)
-    #     self.assertTrue(data["actors"])
-    #     self.assertTrue(data["total_actors"])
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["success"],True)
+        self.assertTrue(data["actors"])
+        self.assertTrue(data["total_actors"])
 
-    # def test_get_categories_not_found(self):
-    #     res = self.client().get("/actors/100")
-    #     data = json.loads(res.data)
+    def test_get_categories_not_found(self):
+        res = self.client().get("/actors/100")
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 404)
-    #     self.assertEqual(data["success"], False)
-    #     self.assertEqual(data["message"], "Resource Not Found")
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["success"], False)
+        self.assertEqual(data["message"], "Resource Not Found")
 
     #  GET questions.
-    # def test_paginated_questions(self):
-    #     res = self.client().get("/questions")
-    #     data = json.loads(res.data)
+    def test_paginated_questions(self):
+        res = self.client().get("/questions")
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data["success"], True)
-    #     self.assertTrue(data["questions"])
-    #     self.assertTrue(data["total_questions"])
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["success"], True)
+        self.assertTrue(data["questions"])
+        self.assertTrue(data["total_questions"])
 
-    # def test_404_sent_requesting_beyond_valid_page(self):
-    #     res = self.client().get("/questions?page=1000", json={"category": 1})
-    #     data = json.loads(res.data)
+    def test_404_sent_requesting_beyond_valid_page(self):
+        res = self.client().get("/questions?page=1000", json={"category": 1})
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 404)
-    #     self.assertEqual(data["success"], False)
-    #     self.assertEqual(data["message"], "Resource Not Found")
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["success"], False)
+        self.assertEqual(data["message"], "Resource Not Found")
 
     # # DELETE with actor_id.
 
@@ -102,44 +102,44 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data["success"], False)
         self.assertEqual(data["message"], "Unprocessable")
 
-    # def test_update_attribute_name(self):
-    #     res = self.client().patch('/actors/1', json={'attributes_name': "Kevin Hart"})
-    #     data = json.loads(res.data)
-    #     actor = Actor.query.filter(Actor.id == 1).one_or_none()
+    def test_update_attribute_name(self):
+        res = self.client().patch('/actors/1', json={'attributes_name': "Kevin Hart"})
+        data = json.loads(res.data)
+        actor = Actor.query.filter(Actor.id == 1).one_or_none()
 
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data['success'], True)
-    #     self.assertEqual(book.format()['attributes_name'], "Kevin Hart")
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertEqual(book.format()['attributes_name'], "Kevin Hart")
         
 
-    # def test_400_for_failed_update(self):
-    #     res = self.client().patch('/actors/1')
-    #     data = json.loads(res.data)
+    def test_400_for_failed_update(self):
+        res = self.client().patch('/actors/1')
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 400)
-    #     self.assertEqual(data['success'], False)
-    #     self.assertEqual(data['message'], 'Bad Request')
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Bad Request')
 
     # # POST new actor.
 
-    # def test_post_actor(self):
-    #     res = self.client().post("/actors", json=self.new_actor)
-    #     data = json.loads(res.data)
+    def test_post_actor(self):
+        res = self.client().post("/actors", json=self.new_actor)
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data["success"], True)
-    #     self.assertTrue(data["created"])
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["success"], True)
+        self.assertTrue(data["created"])
 
-    #     self.assertTrue(data["actors"])
-    #     self.assertTrue(data["total_actors"])
+        self.assertTrue(data["actors"])
+        self.assertTrue(data["total_actors"])
 
-    # def test_post_new_actor_405(self):
-    #     res = self.client().post("/actors/100", json=self.new_actor)
-    #     data = json.loads(res.data)
+    def test_post_new_actor_405(self):
+        res = self.client().post("/actors/100", json=self.new_actor)
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 405)
-    #     self.assertEqual(data["success"], False)
-    #     self.assertEqual(data["message"], "Method Not Allowed")
+        self.assertEqual(res.status_code, 405)
+        self.assertEqual(data["success"], False)
+        self.assertEqual(data["message"], "Method Not Allowed")
 
 
 

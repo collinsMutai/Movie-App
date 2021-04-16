@@ -52,7 +52,7 @@ def create_app(test_config=None):
 
     @app.route("/actors", methods=["GET"])
     @requires_auth("get:actors&movies")
-    def retrieve_actors(jwt):
+    def retrieve_actors(token):
             
         actors = Actor.query.order_by(Actor.id).all()
         current_actors = paginate_actors(request, actors)
@@ -110,7 +110,7 @@ def create_app(test_config=None):
     # Update actor
     @app.route("/actors/<int:actors_id>", methods=["PATCH"])
     @requires_auth("patch:actors&movies")
-    def update_actor(payload, actors_id):
+    def update_actor(token, actors_id):
 
         body = request.get_json()
 
