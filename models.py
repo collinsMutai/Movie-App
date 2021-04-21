@@ -4,10 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 
 
-database_name = "capstonedb"
-database_path = os.environ['DATABASE_URL']
+# database_name = "capstonedb"
+database_path = os.environ.get('DATABASE_URL')
 
 db = SQLAlchemy()
+
 
 '''
 setup_db(app)

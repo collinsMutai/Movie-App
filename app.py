@@ -2,7 +2,7 @@ import os, sys
 from flask import Flask, request, abort, jsonify, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-
+from flask_migrate import Migrate
 
 from models import setup_db, Actor, Movie
 
@@ -29,6 +29,8 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
+    db = SQLAlchemy(app)
+    migrate = Migrate(app, db)
 
 
 
