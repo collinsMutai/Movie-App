@@ -258,3 +258,12 @@ def create_app(test_config=None):
 # python manage.py db init
 # python manage.py db migrate
 # python manage.py db upgrade
+
+# heroku config --app  capstoneprojectdb
+# heroku run python manage.py db upgrade --app   capstoneprojectdb  
+
+# $ PGUSER=postgres PGPASSWORD=7749 heroku pg:push capstonedb DATABASE_URL --app  capstoneprojectdb 
+# heroku pg:push capstonedb HEROKU_POSTGRESQL_RED_URL --app  capstoneprojectdb
+# $ PGUSER=postgres PGPASSWORD=7749 heroku pg:pull DATABASE_URL capstonedb --app capstoneprojectdb
+
+# export DATABASE_URL="postgres://postgres:7749@localhost:5432/capstonedb"
