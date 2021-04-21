@@ -6,6 +6,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 
-SQLALCHEMY_DATABASE_URI = "postgres://postgres:7749@localhost:5432/capstonedb"
+SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+
