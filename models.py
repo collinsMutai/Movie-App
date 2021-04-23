@@ -3,12 +3,12 @@ from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-
-# database_name = "capstonedb"
-database_path = os.environ.get('DATABASE_URL')
+database_name = "capstonedb"
+database_path = "postgres://{}:{}@{}/{}".format(
+    'postgres', '7749','localhost:5432', database_name
+)
 
 db = SQLAlchemy()
-
 
 '''
 setup_db(app)
@@ -20,6 +20,8 @@ def setup_db(app, database_path=database_path):
     db.app = app
     db.init_app(app)
     db.create_all()
+
+
 
 
 
