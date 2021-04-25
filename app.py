@@ -53,8 +53,8 @@ def create_app(test_config=None):
     #  get all actors
 
     @app.route("/actors", methods=["GET"])
-    @requires_auth("get:actors&movies")
-    def retrieve_actors(token):
+    # @requires_auth("get:actors&movies")
+    def retrieve_actors():
             
         actors = Actor.query.order_by(Actor.id).all()
         current_actors = paginate_actors(request, actors)
