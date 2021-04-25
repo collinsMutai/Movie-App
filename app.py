@@ -235,6 +235,11 @@ def create_app(test_config=None):
 
     return app
 
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run()
 # pip install -r requirements.txt
 # # pip freeze > requirements.txt
 # # FLASK_APP=app.py FLASK_DEBUG=true flask run
