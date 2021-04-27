@@ -71,6 +71,27 @@ def create_app(test_config=None):
             "actors": current_actors,
             "total_actors": total_actors
             })
+    #  get all movies
+
+    @app.route("/movies", methods=["GET"])
+    # @requires_auth("get:actors&movies")
+    def retrieve_movies():
+            
+        movies = Movie.query.order_by(Movie.id).all()
+        current_movies = paginate_actors(request, movies)
+
+            
+        if len(current_movies) == 0:
+            abort(404)
+                    
+                
+        total_movies = len(Movie.query.all())
+
+        return jsonify({
+            "success": True,
+            "movies": current_movies,
+            "total_movies": total_movies
+            })
 
 
 
@@ -107,6 +128,39 @@ def create_app(test_config=None):
             abort(422)
 
 
+    #  Delete movie
+
+    @app.route("/movies/<int:id>", methods=["DELETE"])
+    # @requires_auth("delete:actor")
+    def delete_movie(id):
+       
+        try:
+
+            movie = Movie.query.get(id)
+
+            if movie is None:
+                abort(404)
+
+            movie.delete()
+
+            movies = Movie.query.order_by(Movie.id).all()
+            current_movies = paginate_actors(request, movies)
+
+            total_movies = len(Movie.query.all())
+
+            return jsonify(
+                {
+                    "success": True,
+                    "deleted": movie.id,
+                    "movies": current_movies,
+                    "total_movies": total_movies
+                }
+            )
+
+        except:
+            abort(422)
+
+
 
 
     # Update actor
@@ -129,6 +183,32 @@ def create_app(test_config=None):
             return jsonify({
                 "success": True, 
                 "updated": actor.id,
+                })
+        except:
+
+            abort(400)
+
+
+    # Update movie
+    @app.route("/movies/<int:movies_id>", methods=["PATCH"])
+    # @requires_auth("patch:actors&movies")
+    def update_movie(movies_id):
+
+        body = request.get_json()
+
+        try:
+            movie = Movie.query.filter(Movie.id == movies_id).one_or_none()
+            if movie is None:
+                abort(404)
+
+            if "attributes_title" in body:
+                movie.attributes_title= body.get("attributes_title")
+
+                movie.update()
+
+            return jsonify({
+                "success": True, 
+                "updated": movie.id,
                 })
         except:
 
@@ -161,6 +241,37 @@ def create_app(test_config=None):
                 'created': actor.id,
                 'actors': current_actors,
                 'total_actors': total_actors
+            })
+
+        except:
+            abort(422)
+
+
+    # Add new movie
+    @app.route('/movies', methods=['POST'])
+    # @requires_auth("add:actor")
+    def create_movie():
+        body = request.get_json()
+
+        attributes_title = body.get('attributes_title', None)
+        release_date = body.get('release_date', None)
+        actor_id = body.get('actor_id', None)
+        
+
+        try:
+            movie = Movie(attributes_title=attributes_title, release_date=release_date, actor_id=actor_id)
+            movie.insert()
+
+            selection = Movie.query.order_by(Movie.id).all()
+            current_movies = paginate_actors(request, selection)
+
+            total_movies = len(Movie.query.all())
+
+            return jsonify({
+                'success': True,
+                'created': movie.id,
+                'movies': current_movies,
+                'total_movies': total_movies
             })
 
         except:

@@ -113,6 +113,29 @@ The API will return four error types when requests fail:
 - General:
 
 - Sample: curl -X GET http://127.0.0.1:5000/movies
+  "movies": [
+  {
+  "actor_id": 1,
+  "attributes_title": "Wakanda",
+  "id": 1,
+  "release_date": "2021-27-04"
+  },
+  {
+  "actor_id": null,
+  "attributes_title": "Family Weekend",
+  "id": 2,
+  "release_date": "2021-27-04"
+  },
+  {
+  "actor_id": 1,
+  "attributes_title": "Death at a funeral",
+  "id": 3,
+  "release_date": "2021-27-04"
+  }
+  ],
+  "success": true,
+  "total_movies": 3
+  }
 
 ### DELETE/actors/<int:id>
 
@@ -138,6 +161,32 @@ The API will return four error types when requests fail:
   "deleted": 4,
   "success": true,
   "total_actors": 2
+  }
+
+### DELETE/movies/<int:id>
+
+- General:
+
+  - Deletes a movie based on id and returns actors object, id of deleted movie, success message and value
+
+- Sample: curl -X DELETE http://127.0.0.1:5000/movies/3
+  "deleted": 2,
+  "movies": [
+  {
+  "actor_id": 1,
+  "attributes_title": "Wakanda",
+  "id": 1,
+  "release_date": "2021-27-04"
+  },
+  {
+  "actor_id": 1,
+  "attributes_title": "Death at a funeral",
+  "id": 3,
+  "release_date": "2021-27-04"
+  }
+  ],
+  "success": true,
+  "total_movies": 2
   }
 
 ### POST/actors
@@ -172,6 +221,38 @@ The API will return four error types when requests fail:
   "total_actors": 3
   }
 
+### POST/movies
+
+- General:
+
+  - Creates a new movie, returns movie object, the id of created movie, success message and total number of movies
+
+- Sample: curl http://127.0.0.1:5000/movies -X POST -H "Content-Type: application/json" -d '{"attributes_title":"Madea", "release_date":"2021-27-04", "actor_id":"1"}'
+  "created": 4,
+  "movies": [
+  {
+  "actor_id": 1,
+  "attributes_title": "Wakanda",
+  "id": 1,
+  "release_date": "2021-27-04"
+  },
+  {
+  "actor_id": 1,
+  "attributes_title": "pirates of the caribbean",
+  "id": 3,
+  "release_date": "2021-27-04"
+  },
+  {
+  "actor_id": 1,
+  "attributes_title": "Madea",
+  "id": 4,
+  "release_date": "2021-27-04"
+  }
+  ],
+  "success": true,
+  "total_movies": 3
+  }
+
 ### PATCH/actors
 
 - General:
@@ -181,4 +262,15 @@ The API will return four error types when requests fail:
 - Sample: curl http://127.0.0.1:5000/actors/2 -X PATCH -H "Content-Type: application/json" -d '{"attributes_name":"Collins"}'
   "success": true,
   "updated": 2
+  }
+
+### PATCH/movies
+
+- General:
+
+  - Updates the attributes_title of a movie, returns the id of updated movie, and a success message.
+
+- Sample: curl http://127.0.0.1:5000/movies/3 -X PATCH -H "Content-Type: application/json" -d '{"attributes_title":"pirates of the caribbean"}'
+  "success": true,
+  "updated": 3
   }

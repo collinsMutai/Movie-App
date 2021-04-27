@@ -2,7 +2,7 @@ import os
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
-
+from datetime import datetime
 
 database_path = os.environ['DATABASE_URL']
 
@@ -74,7 +74,7 @@ class Movie(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     attributes_title = db.Column(db.String())
-    release_date = db.Column(db.String())
+    release_date = db.Column(db.DateTime, default=datetime.utcnow)
     actor_id = db.Column(db.Integer, db.ForeignKey("actors.id"))
 
 
@@ -105,3 +105,5 @@ class Movie(db.Model):
             "release_date": self.release_date,
             "actor_id": self.actor_id,
         }
+
+
