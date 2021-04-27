@@ -240,37 +240,3 @@ app = create_app()
 
 if __name__ == '__main__':
     app.run()
-# pip install -r requirements.txt
-# # pip freeze > requirements.txt
-# # FLASK_APP=app.py FLASK_DEBUG=true flask run
-# # pg_ctl -D "C:/Program Files/PostgreSQL/13/data" start
-
-# Casting Assistant 
-# get:actors&movies	Can view actors and movies
-
-# Casting Director 
-# get:actors&movies	Can view actors and movies
-# add&delete:actor	Add or delete an actor from the database
-# patch:actors&movies	Modify actors or movies
-
-# Executive Producer
-# get:actors&movies	Can view actors and movies
-# add&delete:actor	Add or delete an actor from the database
-# patch:actors&movies	Modify actors or movies
-# add&delete:movie	Add or delete a movie from the database
-
-# INSERT INTO actors (attributes_name, age, gender) VALUES ('Bond', '32', 'Male');
-# heroku pg:psql HEROKU_POSTGRESQL_RED_URL
-# heroku pg:push capstonedb HEROKU_POSTGRESQL_RED_URL --app guarded-fjord-08535
-# python manage.py db init
-# python manage.py db migrate
-# python manage.py db upgrade
-
-# heroku config --app  capstoneprojectdb
-# heroku run python manage.py db upgrade --app   capstoneprojectdb  
-
-# $ PGUSER=postgres PGPASSWORD=7749 heroku pg:push capstonedb DATABASE_URL --app  capstoneprojectdb 
-# heroku pg:push capstonedb HEROKU_POSTGRESQL_RED_URL --app  capstoneprojectdb
-# $ PGUSER=postgres PGPASSWORD=7749 heroku pg:pull DATABASE_URL capstonedb --app capstoneprojectdb
-
-# export DATABASE_URL="postgres://postgres:7749@localhost:5432/capstonedb"
