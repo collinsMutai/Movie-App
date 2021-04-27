@@ -46,21 +46,8 @@ def create_app(test_config=None):
     @app.route("/")
     def index():
 
-        actors = Actor.query.order_by(Actor.id).all()
-        current_actors = paginate_actors(request, actors)
 
-            
-        if len(current_actors) == 0:
-            abort(404)
-                    
-                
-        total_actors = len(Actor.query.all())
-
-        return jsonify({
-            "success": True,
-            "actors": current_actors,
-            "total_actors": total_actors
-            })
+        return  "Flask App"
 
 
     #  get all actors
