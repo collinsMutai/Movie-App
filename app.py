@@ -53,7 +53,7 @@ def create_app(test_config=None):
     #  get all actors
 
     @app.route("/actors", methods=["GET"])
-    # @requires_auth("get:actors&movies")
+    @requires_auth("get:actors&movies")
     def retrieve_actors():
             
         actors = Actor.query.order_by(Actor.id).all()
@@ -74,7 +74,7 @@ def create_app(test_config=None):
     #  get all movies
 
     @app.route("/movies", methods=["GET"])
-    # @requires_auth("get:actors&movies")
+    @requires_auth("get:actors&movies")
     def retrieve_movies():
             
         movies = Movie.query.order_by(Movie.id).all()
@@ -131,8 +131,8 @@ def create_app(test_config=None):
     #  Delete movie
 
     @app.route("/movies/<int:id>", methods=["DELETE"])
-    # @requires_auth("delete:actor")
-    def delete_movie(id):
+    @requires_auth("delete:actor")
+    def delete_movie(jwt, id):
        
         try:
 
@@ -191,8 +191,8 @@ def create_app(test_config=None):
 
     # Update movie
     @app.route("/movies/<int:movies_id>", methods=["PATCH"])
-    # @requires_auth("patch:actors&movies")
-    def update_movie(movies_id):
+    @requires_auth("patch:actors&movies")
+    def update_movie(token, movies_id):
 
         body = request.get_json()
 
@@ -249,8 +249,8 @@ def create_app(test_config=None):
 
     # Add new movie
     @app.route('/movies', methods=['POST'])
-    # @requires_auth("add:actor")
-    def create_movie():
+    @requires_auth("add:actor")
+    def create_movie(payload):
         body = request.get_json()
 
         attributes_title = body.get('attributes_title', None)
