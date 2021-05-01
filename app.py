@@ -54,7 +54,7 @@ def create_app(test_config=None):
 
     @app.route("/actors", methods=["GET"])
     @requires_auth("get:actors&movies")
-    def retrieve_actors():
+    def retrieve_actors(jwt):
             
         actors = Actor.query.order_by(Actor.id).all()
         current_actors = paginate_actors(request, actors)
@@ -75,7 +75,7 @@ def create_app(test_config=None):
 
     @app.route("/movies", methods=["GET"])
     @requires_auth("get:actors&movies")
-    def retrieve_movies():
+    def retrieve_movies(jwt):
             
         movies = Movie.query.order_by(Movie.id).all()
         current_movies = paginate_actors(request, movies)
