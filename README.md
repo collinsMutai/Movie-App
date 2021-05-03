@@ -54,7 +54,7 @@ The `--reload` flag will detect file changes and restart the server automaticall
 
 ## Getting Started
 
-- Base URL: At present this app can be run locally and also on heroku. The backend app is hosted at the default, http://127.0.0.1:5000/ or by visiting <--heroku-link -->, whixh set as a proxy in the frontend configuration.
+- Base URL: At present this app can be run locally and also on heroku. The backend app is hosted at the default, http://127.0.0.1:5000/ or by visiting https://capstoneprojectdb.herokuapp.com/ , which set as a proxy in the frontend configuration.
 - Authentication: This version of the application soes not require authentication or API keys.
 
 ## Error Handling
