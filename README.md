@@ -274,3 +274,22 @@ The API will return four error types when requests fail:
   "success": true,
   "updated": 3
   }
+
+## Roles and permissions
+
+- The app use Auth0 to generate jwt tokens which has permissions for each of the three roles. These roles include :
+
+### Casting Assistant
+
+- Can view actors and movies
+
+### Casting Director
+
+- All permissions a Casting Assistant has and…
+- Add or delete an actor from the database
+- Modify actors or movies
+
+### Executive Producer
+
+- All permissions a Casting Director has and…
+- Add or delete a movie from the database

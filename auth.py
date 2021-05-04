@@ -7,13 +7,11 @@ from urllib.request import urlopen
 
 app = Flask(__name__)
 
-AUTH0_DOMAIN = "collinsfrontend.us.auth0.com"
-ALGORITHMS = ["RS256"]
-API_AUDIENCE = "capstone"
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+ALGORITHMS = os.environ['ALGORITHMS']
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
 ## AuthError Exception
-
-
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
@@ -22,9 +20,6 @@ class AuthError(Exception):
 
 
 ## Auth Header
-
-
-
 
 def get_token_auth_header():
     """Obtains the Access Token from the Authorization Header"""
@@ -70,9 +65,6 @@ def get_token_auth_header():
     return token
 
 
-
-
-
 def check_permissions(permission, payload):
     if "permissions" not in payload:
         raise AuthError(
@@ -88,8 +80,6 @@ def check_permissions(permission, payload):
             {"code": "unauthorized", "description": "Permission not found."}, 403
         )
     return True
-
-
 
 
 
@@ -152,8 +142,6 @@ def verify_decode_jwt(token):
         },
         400,
     )
-
-
 
 
 def requires_auth(permission=""):
